@@ -1,0 +1,71 @@
+# Instruction for setting up basic site
+
+django-admin startproject nboston
+python manage.py runserver
+
+python manage.py startapp music
+
+Set up urls.py -- routing -- config for individual app
+Set up view.py -- index page -- with httprequest, response
+
+Create models, makemigrations, migrate
+
+
+Route view to template
+
+
+
+-------------
+# Classes
+
+Make sure HTML Create in class view is titles "<class>_form.html with the class title in LOWERcase letters
+
+---------------------------------------------------------------------
+# make migration
+Python manage.py makemigrations
+# to view
+#python manage.py sqlmigrate blog 0001
+
+python manage.py migrate
+
+
+# Create super user for admin
+Python manage.py createsuperuser
+
+
+# Create the page view
+	
+	# route
+	./music/..
+		#/music/712  (?P<foo>) creates an object foo, 
+		#    Pull out the number before the slash,
+		# 	 treat as album_id
+	url(r'^(?P<album_id>[0-9]+)/$', views.detail, name='detail'),
+
+	# views
+	def detail(request, album_id):
+		return HttpResponse("<h2>Details for view " + str(album_id) + "</h2>")
+
+
+
+
+----------------------------
+Add to DB from console
+python manage.py shell
+
+from music.models import Album, Song
+Album.objects.all()
+a = Album(artist="Taylor Swift", album_title="Red", genre="Country", album_logo="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/01/29/11/Taylor-Swift-revenge-nerds.jpg")
+a.save()
+a.artist
+'Taylor Swift'
+a.album_title
+'Red'
+
+Album.objects.filter(id=1)
+Album.objects.filter(artist__startswith='Taylor')
+
+from music.models import Album, Song
+
+album1 = Album.objects.get(pk=1)
+print album1
